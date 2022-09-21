@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    entrypoint: sh ./.docker/entrypoint.sh
+    container_name: front-tallosflix
+    ports:
+      - 8081:8080
+    tty: true
+    restart: always
+    networks:
+      - tallosflix
+
+networks:
+  tallosflix:
