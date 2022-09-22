@@ -16,6 +16,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import App from './App.vue'
+import http from './http/index.js'
+import store from './store'
 
 // LightBootstrap plugin
 import LightBootstrap from './light-bootstrap-main'
@@ -27,6 +29,8 @@ import './registerServiceWorker'
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
+
+Vue.prototype.$http = http
 
 // configure router
 const router = new VueRouter({
@@ -43,7 +47,8 @@ const router = new VueRouter({
 
 /* eslint-disable no-new */
 new Vue({
+  router,
+  store,
   el: '#app',
   render: h => h(App),
-  router
 })

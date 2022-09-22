@@ -36,7 +36,7 @@
 <script>
 import Card from "../components/Cards/Card.vue";
 import BaseInput from "../components/Inputs/BaseInput.vue";
-
+import store from "../store/index.js"
 export default {
   components: {
     Card,
@@ -51,7 +51,13 @@ export default {
     };
   },
   methods: {
-    enviar() {},
+    enviar() {
+      store.dispatch("efetuarLogin", this.user)
+      .then((response) => {
+        this.$router.push({ name: "Overview" })
+        console.log(response)
+      })
+    },
   },
 };
 </script>
