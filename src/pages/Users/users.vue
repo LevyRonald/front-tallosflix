@@ -1,3 +1,11 @@
 <template>
-    <h1>usuarios kkk</h1>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="cols-12">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
