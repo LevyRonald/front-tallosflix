@@ -12,6 +12,7 @@ import TableList from 'src/pages/TableList.vue'
 import Typography from 'src/pages/Typography.vue'
 import Upgrade from 'src/pages/Upgrade.vue'
 import UserProfile from 'src/pages/UserProfile.vue'
+import Users from 'src/pages/Users/users.vue'
 
 const routes = [
   {
@@ -27,6 +28,11 @@ const routes = [
         path: 'overview',
         name: 'Overview',
         component: Overview
+      },
+      {
+        path: 'users',
+        name: 'users',
+        component: Users
       },
       {
         path: 'user',

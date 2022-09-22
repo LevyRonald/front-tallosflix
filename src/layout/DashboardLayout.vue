@@ -6,6 +6,10 @@
         <i class="nc-icon nc-chart-pie-35"></i>
         <p>Dashboard</p>
       </sidebar-link>
+      <sidebar-link to="/admin/users">
+        <i class="nc-icon nc-single-02"></i>
+        <p>Usuários</p>
+      </sidebar-link>
       <sidebar-link to="/admin/user">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
