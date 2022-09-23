@@ -8,10 +8,14 @@
             body-classes="table-full-width table-responsive"
           >
             <template slot="header">
-              <h4 class="card-title">Usuários cadastrados</h4>
-              <p class="card-category">Lista de usuários cadastrados na tallosflix</p>
-              <div>
-                <b-form-input v-model="filter" placeholder="pesquisar"/>
+              <div class="row">
+                <div class="col-md-8">
+                  <h4 class="card-title">Usuários cadastrados</h4>
+                  <p class="card-category">Lista de usuários cadastrados na tallosflix</p>
+                </div>
+                <div class="col-md-4">
+                  <b-form-input v-model="filter" placeholder="pesquisar..."/>
+                </div>
               </div>
             </template>
             <b-table
