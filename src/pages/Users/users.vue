@@ -27,6 +27,8 @@
               :filter="filter"
               :filter-included-fields="filterOn"
               @filtered="onFiltered"
+              show-empty
+              empty-filtered-text="nenhum usuário encontrado"
             >
 
             </b-table>
