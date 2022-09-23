@@ -11,7 +11,7 @@
               <h4 class="card-title">Usuários cadastrados</h4>
               <p class="card-category">Lista de usuários cadastrados na tallosflix</p>
               <div>
-                <b-form-input placeholder="pesquisar"/>
+                <b-form-input v-model="filter" placeholder="pesquisar"/>
               </div>
             </template>
             <b-table
@@ -20,6 +20,9 @@
               responsive
               :items="users"
               :fields="column"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              @filtered="onFiltered"
             >
 
             </b-table>
@@ -43,6 +46,8 @@ export default {
     return {
       totalRows: 1,
       currentPage: 1,
+      filter: null,
+      filterOn: [],
       users: [],
       column: [
         { key: "_id"},
@@ -55,6 +60,12 @@ export default {
     store.dispatch("getUsers")
     .then((response) => (this.users = response.data))
     .catch((erro) => console.log(erro));
+  },
+  methods: {
+    onFiltered(filteredItems) {
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
   }
 };
 </script>
