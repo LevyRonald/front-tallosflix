@@ -20,6 +20,7 @@ import http from './http/index.js'
 import store from './store'
 
 // LightBootstrap plugin
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import LightBootstrap from './light-bootstrap-main'
 
 // router setup
@@ -29,6 +30,8 @@ import './registerServiceWorker'
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 Vue.prototype.$http = http
 

@@ -14,7 +14,7 @@
                   <p class="card-category">Lista de usuários cadastrados na tallosflix</p>
                 </div>
                 <div class="col-md-4">
-                  <b-form-input v-model="filter" placeholder="pesquisar..."/>
+                  <b-form-input debounce="300" v-model="filter" placeholder="pesquisar..."/>
                 </div>
               </div>
             </template>
@@ -30,7 +30,21 @@
               show-empty
               empty-filtered-text="nenhum usuário encontrado"
             >
-
+              <template #cell(actions)="">
+                <b-dropdown no-caret variant="flat">
+                  <template #button-content>
+                    <b-icon icon="three-dots-vertical" class="align-middle"></b-icon>
+                  </template>
+                  <b-dropdown-item>
+                    <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
+                    <label class="pl-1">Editar</label>
+                  </b-dropdown-item>
+                  <b-dropdown-item>
+                    <b-icon icon="trash" scale="0.9"></b-icon>
+                    <label class="pl-1">Excluir</label>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </template>
             </b-table>
           </card>
         </div>
@@ -39,14 +53,11 @@
   </div>
 </template>
 <script>
-import { BTable, BFormInput } from "bootstrap-vue"
 import Card from "../../components/Cards/Card.vue";
 import store from "../../store/index.js"
 export default {
   components: {
-    Card,
-    BTable,
-    BFormInput
+    Card
   },
   data() {
     return {
