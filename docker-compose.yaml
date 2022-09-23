@@ -12,7 +12,7 @@ services:
     networks:
       - tallosflix
     volumes:
-      - .:/user/app-front/app
+      - .:/user/tallosflixfront/app
 
 networks:
   tallosflix:
