@@ -18,6 +18,9 @@ const routes = [
   {
     path: '/',
     component: Login,
+    meta: {
+      publica: true
+    }
   },
   {
     path: '/admin',
