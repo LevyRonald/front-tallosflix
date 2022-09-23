@@ -20,6 +20,7 @@ import http from './http/index.js'
 import store from './store'
 
 // LightBootstrap plugin
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 import LightBootstrap from './light-bootstrap-main'
 
 // router setup
@@ -29,12 +30,15 @@ import './registerServiceWorker'
 // plugin setup
 Vue.use(VueRouter)
 Vue.use(LightBootstrap)
+Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 Vue.prototype.$http = http
 
 // configure router
 const router = new VueRouter({
-  routes, // short for routes: routes
+  routes,
+  mode: 'history', // short for routes: routes
   linkActiveClass: 'nav-item active',
   scrollBehavior: (to) => {
     if (to.hash) {
@@ -43,6 +47,15 @@ const router = new VueRouter({
       return { x: 0, y: 0 }
     }
   }
+})
+
+router.beforeEach((routeTo, routeFrom, next) => {
+  if(!routeTo.meta.publica && !store.state.token) {
+    return routeTo == '/' ? next() : next({
+      path: '/'
+    })
+  }
+  next();
 })
 
 /* eslint-disable no-new */
