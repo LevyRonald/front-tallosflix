@@ -59,6 +59,7 @@ export default {
         { key: "_id"},
         { key: "name", label: "nome" },
         { key: "email", label: "email" },
+        { key: "actions", label: "ações"}
       ]
     }
   },
