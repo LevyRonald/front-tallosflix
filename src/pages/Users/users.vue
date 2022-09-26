@@ -9,12 +9,17 @@
           >
             <template slot="header">
               <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-7">
                   <h4 class="card-title">Usuários cadastrados</h4>
                   <p class="card-category">Lista de usuários cadastrados na tallosflix</p>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-5 d-flex align-items-center justify-content-end">
+                  <button class="btn btn-primary h-75" type="submit">
+                  <span class="text-nowrap">Adicionar</span>
+                </button>
+                <div class="pl-1">
                   <b-form-input debounce="300" v-model="filter" placeholder="pesquisar..."/>
+                  </div>
                 </div>
               </div>
             </template>
