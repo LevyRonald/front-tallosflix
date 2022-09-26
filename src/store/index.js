@@ -43,6 +43,13 @@ export default new Vuex.Store({
         .then(response => resolve(response))
         .catch(error => reject(error))
       })
+    },
+    createUsers(ctx, user){
+      return new Promise((resolve, reject) => {
+        http.post(`/users/create`, user)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
     }
   },
   modules: {
