@@ -9,7 +9,8 @@ Vue.config.devtools = true
 export default new Vuex.Store({
   state: {
     token: null,
-    user: {}
+    user: {},
+    usuarioGetDel: {}
   },
   getters: {
   },
@@ -47,6 +48,13 @@ export default new Vuex.Store({
     createUsers(ctx, user){
       return new Promise((resolve, reject) => {
         http.post(`/users/create`, user)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
+    },
+    deleteUser(usuarioGetDel) {
+      return new Promise((resolve, reject) => {
+        http.delete(`/users/delete/${usuarioGetDel._id}`)
         .then(response => resolve(response))
         .catch(error => reject(error))
       })

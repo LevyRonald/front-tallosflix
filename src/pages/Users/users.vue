@@ -1,6 +1,7 @@
 <template>
   <div class="content">
     <user-create-vue :is-add-new-user-modal-active.sync="isAddNewUserModalActive" />
+    <user-delete-vue :is-delete-user-modal-active.sync="isDeleteUserModalActive" :userDel="userdelete"/>
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -44,7 +45,7 @@
               show-empty
               empty-filtered-text="nenhum usuário encontrado"
             >
-              <template #cell(actions)="">
+              <template #cell(actions)="{ item }">
                 <b-dropdown no-caret variant="flat">
                   <template #button-content>
                     <b-icon
@@ -56,7 +57,9 @@
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
-                  <b-dropdown-item>
+                  <b-dropdown-item
+                    @click="deleteuser(item)"
+                    >
                     <b-icon icon="trash" scale="0.9"></b-icon>
                     <label class="pl-1">Excluir</label>
                   </b-dropdown-item>
@@ -77,11 +80,14 @@ import Card from "../../components/Cards/Card.vue";
 import store from "../../store/index.js";
 import UserCreateVue from '../../components/Modals/UserCreate.vue';
 import { ref } from 'vue';
+import UserDeleteVue from '../../components/Modals/UserDelete.vue';
+import http from '../../http';
 export default {
   components: {
     Card,
     VBModal,
-    UserCreateVue
+    UserCreateVue,
+    UserDeleteVue
   },
   data() {
     return {
@@ -89,8 +95,10 @@ export default {
       currentPage: 1,
       filter: null,
       isAddNewUserModalActive: ref(false),
+      isDeleteUserModalActive: ref(false),
       filterOn: [],
       users: [],
+      usuarioGetDel: {},
       column: [
         { key: "_id" },
         { key: "name", label: "nome" },
@@ -109,9 +117,20 @@ export default {
       .catch((erro) => console.log(erro));
   },
   methods: {
+    userdelete() {
+      http.delete(`users/delete/${this.usuarioGetDel._id}`)
+      .then((response) => console.log(response))
+    },
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
+    },
+    deleteuser(users) {
+      this.usuarioGetDel = {
+        ...users,
+      };
+      this.$bvModal.show("modal-delete");
+      console.log(this.usuarioGetDel._id)
     },
   },
 };
