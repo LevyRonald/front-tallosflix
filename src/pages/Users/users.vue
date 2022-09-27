@@ -119,7 +119,7 @@ export default {
   methods: {
     userdelete() {
       http.delete(`users/delete/${this.usuarioGetDel._id}`)
-      .then((response) => console.log(response))
+      .then((response) => console.log(response), this.hideModal())
     },
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length;
@@ -130,8 +130,10 @@ export default {
         ...users,
       };
       this.$bvModal.show("modal-delete");
-      console.log(this.usuarioGetDel._id)
     },
+    hideModal() {
+      this.$bvModal.hide("modal-delete")
+    }
   },
 };
 </script>
