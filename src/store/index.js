@@ -10,7 +10,6 @@ export default new Vuex.Store({
   state: {
     token: null,
     user: {},
-    usuarioGetDel: {}
   },
   getters: {
   },
@@ -18,7 +17,11 @@ export default new Vuex.Store({
     DEFINIR_USUARIO_LOGADO(state, { token, user }) {
       state.token = token
       state.user = user
-      localStorage.setItem("token", token)
+    },
+    DESLOGAR_USUARIO(state) {
+      state.token = null
+      state.user = {}
+      localStorage.clear()
     }
   },
   actions: {
