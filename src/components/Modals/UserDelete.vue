@@ -29,10 +29,6 @@ export default {
     VBModal,
     usersVue,
   },
-  data(){
-    return {
-    }
-  },
   directives: {
     "b-modal": VBModal,
   },

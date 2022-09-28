@@ -58,6 +58,13 @@ export default new Vuex.Store({
         .then(response => resolve(response))
         .catch(error => reject(error))
       })
+    },
+    updateUser(user) {
+      return new Promise((resolve, reject) => {
+        http.patch(`/users/update/${user._id}`, {user})
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
     }
   },
   modules: {
