@@ -22,11 +22,16 @@
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
-                    <b-form-input debounce="300" placeholder="pesquisar..."/>
+                    <b-form-input debounce="300" placeholder="pesquisar..." />
                   </div>
                 </div>
               </div>
             </template>
+            <b-table
+            :items="theaters"
+            >
+
+            </b-table>
           </card>
         </div>
       </div>
@@ -35,9 +40,18 @@
 </template>
 <script>
 import Card from "../../components/Cards/Card.vue";
+import store from '../../store';
 export default {
   components: { Card },
-};
+  data() {
+    return {
+        theaters: []
+    }
+  },
+  mounted() {
+    store.dispatch("getTheaters")
+    .then((response) => (this.theaters = response.data))
+    .catch((erro) => console.log(erro));
+  }
+}
 </script>
-
-Card
