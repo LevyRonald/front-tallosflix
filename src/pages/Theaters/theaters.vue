@@ -28,10 +28,38 @@
               </div>
             </template>
             <b-table
-            :items="theaters"
+              striped
+              hover
+              responsive
+              :items="theaters"
+              :fields="column"
+              :per-page="perPage"
+              :current-page="currentPage"
             >
-
             </b-table>
+            <div class="mx-2 mb-2 w-100">
+              <b-row>
+                <b-col
+                  cols="12"
+                  sm="12"
+                  class="
+                    d-flex
+                    align-items-center
+                    justify-content-center justify-content-sm-end
+                  "
+                >
+                  <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalTheaters"
+                    :per-page="perPage"
+                    first-number
+                    last-number
+                    class="mb-0 mt-1 mt-sm-0"
+                  >
+                  </b-pagination>
+                </b-col>
+              </b-row>
+            </div>
           </card>
         </div>
       </div>
@@ -40,18 +68,35 @@
 </template>
 <script>
 import Card from "../../components/Cards/Card.vue";
-import store from '../../store';
+import store from "../../store";
 export default {
   components: { Card },
   data() {
     return {
-        theaters: []
-    }
+      perPage: 10,
+      currentPage: 1,
+      theaters: [],
+      column: [
+        { key: "_id" },
+        { key: "theaterId", label: "Numero" },
+        { key: "location.address.street1", label: "Endereço" },
+        { key: "location.address.city", label: "Cidade" },
+        { key: "location.address.state", label: "Estado" },
+        { key: "location.address.zipcode", label: "Codigo postal" },
+        { key: "location.geo.coordinates", label: "Cordenadas" },
+      ],
+    };
+  },
+  computed: {
+    totalTheaters() {
+      return this.theaters.length;
+    },
   },
   mounted() {
-    store.dispatch("getTheaters")
-    .then((response) => (this.theaters = response.data))
-    .catch((erro) => console.log(erro));
-  }
-}
+    store
+      .dispatch("getTheaters")
+      .then((response) => (this.theaters = response.data))
+      .catch((erro) => console.log(erro));
+  },
+};
 </script>
