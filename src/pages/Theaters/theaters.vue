@@ -22,7 +22,7 @@
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
-                    <b-form-input debounce="300" placeholder="pesquisar..." />
+                    <b-form-input v-model="filter" debounce="300" placeholder="pesquisar..." />
                   </div>
                 </div>
               </div>
@@ -31,10 +31,13 @@
               striped
               hover
               responsive
+              :filter="filter"
               :items="theaters"
               :fields="column"
               :per-page="perPage"
               :current-page="currentPage"
+              show-empty
+              empty-filtered-text="nenhum usuário encontrado"
             >
             </b-table>
             <div class="mx-2 mb-2 w-100">
@@ -75,6 +78,7 @@ export default {
     return {
       perPage: 10,
       currentPage: 1,
+      filter: null,
       theaters: [],
       column: [
         { key: "_id" },
