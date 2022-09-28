@@ -39,6 +39,24 @@
               show-empty
               empty-filtered-text="nenhum usuário encontrado"
             >
+            <template #cell(actions)="">
+                <b-dropdown no-caret variant="flat">
+                  <template #button-content>
+                    <b-icon
+                      icon="three-dots-vertical"
+                      class="align-middle"
+                    ></b-icon>
+                  </template>
+                  <b-dropdown-item>
+                    <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
+                    <label class="pl-1">Editar</label>
+                  </b-dropdown-item>
+                  <b-dropdown-item>
+                    <b-icon icon="trash" scale="0.9"></b-icon>
+                    <label class="pl-1">Excluir</label>
+                  </b-dropdown-item>
+                </b-dropdown>
+              </template>
             </b-table>
             <div class="mx-2 mb-2 w-100">
               <b-row>
@@ -88,6 +106,7 @@ export default {
         { key: "location.address.state", label: "Estado" },
         { key: "location.address.zipcode", label: "Codigo postal" },
         { key: "location.geo.coordinates", label: "Cordenadas" },
+        { key: "actions", label: "Ações"}
       ],
     };
   },
