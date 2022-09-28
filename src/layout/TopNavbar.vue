@@ -54,7 +54,7 @@
             <div class="divider"></div>
             <a class="dropdown-item" href="#">Separated link</a>
           </base-dropdown>
-          <li class="nav-item">
+          <li class="nav-item" @click.prevent="logout">
             <a href="#" class="nav-link">
               Log out
             </a>
@@ -65,6 +65,7 @@
   </nav>
 </template>
 <script>
+import store from '../store'
   export default {
     computed: {
       routeName () {
@@ -78,6 +79,10 @@
       }
     },
     methods: {
+      logout() {
+        store.commit("DESLOGAR_USUARIO");
+        this.$router.push({ name: 'login' });
+      },
       capitalizeFirstLetter (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },
