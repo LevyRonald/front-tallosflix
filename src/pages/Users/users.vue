@@ -162,9 +162,11 @@ export default {
   },
   methods: {
     userdelete() {
-      http
-        .delete(`users/delete/${this.usuarioGetDel._id}`)
-        .then((response) => console.log(response), this.hideModalDelete());
+      http.delete(`users/delete/${this.usuarioGetDel._id}`)
+      .then((response) => {
+        console.log(response),
+        this.hideModalDelete();
+      });
     },
     userupdate() {
       http
