@@ -10,6 +10,10 @@
         <i class="nc-icon nc-single-02"></i>
         <p>Usuários</p>
       </sidebar-link>
+      <sidebar-link to="/admin/theaters">
+        <i class="nc-icon nc-square-pin"></i>
+        <p>Teatros</p>
+      </sidebar-link>
       <sidebar-link to="/admin/user">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>

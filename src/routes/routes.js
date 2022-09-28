@@ -9,6 +9,7 @@ import Maps from 'src/pages/Maps.vue'
 import Notifications from 'src/pages/Notifications.vue'
 import Overview from 'src/pages/Overview.vue'
 import TableList from 'src/pages/TableList.vue'
+import Theaters from 'src/pages/Theaters/theaters.vue'
 import Typography from 'src/pages/Typography.vue'
 import Upgrade from 'src/pages/Upgrade.vue'
 import UserProfile from 'src/pages/UserProfile.vue'
@@ -37,6 +38,11 @@ const routes = [
         path: 'users',
         name: 'users',
         component: Users
+      },
+      {
+        path: 'theaters',
+        name: 'theaters',
+        component: Theaters
       },
       {
         path: 'user',
