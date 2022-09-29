@@ -7,6 +7,11 @@
       :isDeleteTheaterModalActive="isDeleteTheaterModalActive"
       :theaterDel="theaterdelete"
     />
+    <theater-update-vue
+      :isUpdateTheaterModalActive="isUpdateTheaterModalActive"
+      :theaterGet="getTheater"
+      :updateTeatro="theaterupdate"
+    />
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -62,7 +67,7 @@
                       class="align-middle"
                     ></b-icon>
                   </template>
-                  <b-dropdown-item>
+                  <b-dropdown-item @click="updatetheater(item)">
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
@@ -110,11 +115,13 @@ import TheaterCreateVue from "../../components/Modals/TheaterCreate.vue";
 import store from "../../store";
 import TheaterDeleteVue from "../../components/Modals/TheaterDelete.vue";
 import http from "../../http";
+import TheaterUpdateVue from "../../components/Modals/TheaterUpdate.vue";
 export default {
   components: {
     Card,
     TheaterCreateVue,
     TheaterDeleteVue,
+    TheaterUpdateVue,
   },
   data() {
     return {
@@ -123,6 +130,7 @@ export default {
       filter: null,
       isAddNewTheaterModalActive: ref(false),
       isDeleteTheaterModalActive: ref(false),
+      isUpdateTheaterModalActive: ref(false),
       theaters: [],
       getTheater: {},
       column: [
@@ -158,12 +166,25 @@ export default {
         this.$bvModal.hide("modal-delete");
       });
     },
+    theaterupdate() {
+      http
+        .patch(`theaters/update/${this.getTheater._id}`, this.getTheater)
+        .then((response) => {
+          console.log(response), this.$bvModal.hide("modal-update");
+        });
+    },
     gettheater(theaters) {
-    this.getTheater = {
-      ...theaters,
-    };
-    this.$bvModal.show("modal-delete");
-  },
+      this.getTheater = {
+        ...theaters,
+      };
+      this.$bvModal.show("modal-delete");
+    },
+    updatetheater(theaters) {
+      this.getTheater = {
+        ...theaters,
+      };
+      this.$bvModal.show("modal-update");
+    },
   },
 };
 </script>
