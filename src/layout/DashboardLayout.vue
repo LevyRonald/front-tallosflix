@@ -14,6 +14,10 @@
         <i class="nc-icon nc-square-pin"></i>
         <p>Teatros</p>
       </sidebar-link>
+      <sidebar-link to="/admin/movies">
+        <i class="nc-icon nc-tv-2"></i>
+        <p>Filmes</p>
+      </sidebar-link>
       <sidebar-link to="/admin/user">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
