@@ -68,7 +68,21 @@ export default new Vuex.Store({
         .then(response => resolve(response))
         .catch(error => reject(error))
       })
-    }
+    },
+    getTheaters() {
+      return new Promise((resolve, reject) => {
+        http.get(`/theaters/list`)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
+    },
+    createTheater(ctx, theater){
+      return new Promise((resolve, reject) => {
+        http.post(`/theaters/create`, theater)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
+    },
   },
   modules: {
   },
