@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <theater-create-vue :isAddNewTheaterModalActive="isAddNewTheaterModalActive"/>
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -18,11 +19,15 @@
                 <div
                   class="col-md-5 d-flex align-items-center justify-content-end"
                 >
-                  <button class="btn btn-primary h-75" type="submit">
+                  <button class="btn btn-primary h-75" type="submit" v-b-modal.modal-create>
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
-                    <b-form-input v-model="filter" debounce="300" placeholder="pesquisar..." />
+                    <b-form-input
+                      v-model="filter"
+                      debounce="300"
+                      placeholder="pesquisar..."
+                    />
                   </div>
                 </div>
               </div>
@@ -39,7 +44,7 @@
               show-empty
               empty-filtered-text="nenhum usuário encontrado"
             >
-            <template #cell(actions)="">
+              <template #cell(actions)="">
                 <b-dropdown no-caret variant="flat">
                   <template #button-content>
                     <b-icon
@@ -88,15 +93,22 @@
   </div>
 </template>
 <script>
+import { ref } from 'vue';
+import { VBModal } from "bootstrap-vue";
 import Card from "../../components/Cards/Card.vue";
+import TheaterCreateVue from "../../components/Modals/TheaterCreate.vue";
 import store from "../../store";
 export default {
-  components: { Card },
+  components: {
+    Card,
+    TheaterCreateVue,
+  },
   data() {
     return {
       perPage: 10,
       currentPage: 1,
       filter: null,
+      isAddNewTheaterModalActive: ref(false),
       theaters: [],
       column: [
         { key: "_id" },
@@ -106,9 +118,12 @@ export default {
         { key: "location.address.state", label: "Estado" },
         { key: "location.address.zipcode", label: "Codigo postal" },
         { key: "location.geo.coordinates", label: "Cordenadas" },
-        { key: "actions", label: "Ações"}
+        { key: "actions", label: "Ações" },
       ],
     };
+  },
+  directives: {
+    "b-modal": VBModal,
   },
   computed: {
     totalTheaters() {
