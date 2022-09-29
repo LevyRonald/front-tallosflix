@@ -1,6 +1,7 @@
 <template>
   <div class="content">
     <theater-create-vue :isAddNewTheaterModalActive="isAddNewTheaterModalActive"/>
+    <theater-delete-vue :isDeleteTheaterModalActive="isDeleteTheaterModalActive"/>
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -56,7 +57,7 @@
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
-                  <b-dropdown-item>
+                  <b-dropdown-item v-b-modal.modal-delete>
                     <b-icon icon="trash" scale="0.9"></b-icon>
                     <label class="pl-1">Excluir</label>
                   </b-dropdown-item>
@@ -98,10 +99,12 @@ import { VBModal } from "bootstrap-vue";
 import Card from "../../components/Cards/Card.vue";
 import TheaterCreateVue from "../../components/Modals/TheaterCreate.vue";
 import store from "../../store";
+import TheaterDeleteVue from '../../components/Modals/TheaterDelete.vue';
 export default {
   components: {
     Card,
     TheaterCreateVue,
+    TheaterDeleteVue
   },
   data() {
     return {
@@ -109,6 +112,7 @@ export default {
       currentPage: 1,
       filter: null,
       isAddNewTheaterModalActive: ref(false),
+      isDeleteTheaterModalActive: ref(false),
       theaters: [],
       column: [
         { key: "_id" },
