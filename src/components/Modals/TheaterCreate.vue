@@ -87,7 +87,7 @@ export default {
   data() {
     return {
       theaters: {
-        theaterId: "532",
+        theaterId: "",
         location: {
           address: {
             street1: "",
