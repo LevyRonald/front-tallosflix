@@ -1,7 +1,12 @@
 <template>
   <div class="content">
-    <theater-create-vue :isAddNewTheaterModalActive="isAddNewTheaterModalActive"/>
-    <theater-delete-vue :isDeleteTheaterModalActive="isDeleteTheaterModalActive"/>
+    <theater-create-vue
+      :isAddNewTheaterModalActive="isAddNewTheaterModalActive"
+    />
+    <theater-delete-vue
+      :isDeleteTheaterModalActive="isDeleteTheaterModalActive"
+      :theaterDel="theaterdelete"
+    />
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -20,7 +25,11 @@
                 <div
                   class="col-md-5 d-flex align-items-center justify-content-end"
                 >
-                  <button class="btn btn-primary h-75" type="submit" v-b-modal.modal-create>
+                  <button
+                    class="btn btn-primary h-75"
+                    type="submit"
+                    v-b-modal.modal-create
+                  >
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
@@ -45,7 +54,7 @@
               show-empty
               empty-filtered-text="nenhum usuário encontrado"
             >
-              <template #cell(actions)="">
+              <template #cell(actions)="{ item }">
                 <b-dropdown no-caret variant="flat">
                   <template #button-content>
                     <b-icon
@@ -57,7 +66,7 @@
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
-                  <b-dropdown-item v-b-modal.modal-delete>
+                  <b-dropdown-item @click="gettheater(item)">
                     <b-icon icon="trash" scale="0.9"></b-icon>
                     <label class="pl-1">Excluir</label>
                   </b-dropdown-item>
@@ -94,17 +103,18 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 import { VBModal } from "bootstrap-vue";
 import Card from "../../components/Cards/Card.vue";
 import TheaterCreateVue from "../../components/Modals/TheaterCreate.vue";
 import store from "../../store";
-import TheaterDeleteVue from '../../components/Modals/TheaterDelete.vue';
+import TheaterDeleteVue from "../../components/Modals/TheaterDelete.vue";
+import http from "../../http";
 export default {
   components: {
     Card,
     TheaterCreateVue,
-    TheaterDeleteVue
+    TheaterDeleteVue,
   },
   data() {
     return {
@@ -114,6 +124,7 @@ export default {
       isAddNewTheaterModalActive: ref(false),
       isDeleteTheaterModalActive: ref(false),
       theaters: [],
+      getTheater: {},
       column: [
         { key: "_id" },
         { key: "theaterId", label: "Numero" },
@@ -139,6 +150,20 @@ export default {
       .dispatch("getTheaters")
       .then((response) => (this.theaters = response.data))
       .catch((erro) => console.log(erro));
+  },
+  methods: {
+    theaterdelete() {
+      http.delete(`theaters/delete/${this.getTheater._id}`).then((response) => {
+        console.log(response);
+        this.$bvModal.hide("modal-delete");
+      });
+    },
+    gettheater(theaters) {
+    this.getTheater = {
+      ...theaters,
+    };
+    this.$bvModal.show("modal-delete");
+  },
   },
 };
 </script>
