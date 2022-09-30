@@ -1,5 +1,6 @@
 <template>
   <div class="content">
+    <movie-create-vue :isAddNewMovieModalActive="isAddNewMovieModalActive"/>
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -18,7 +19,7 @@
                 <div
                   class="col-md-5 d-flex align-items-center justify-content-end"
                 >
-                  <button class="btn btn-primary h-75" type="submit">
+                  <button class="btn btn-primary h-75" type="submit" v-b-modal.modal-create>
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
@@ -93,15 +94,18 @@
   </div>
 </template>
 <script>
+import { ref } from 'vue';
 import Card from "../../components/Cards/Card.vue";
+import MovieCreateVue from '../../components/Modals/MovieCreate.vue';
 import store from "../../store";
 
 export default {
-  components: { Card },
+  components: { Card, MovieCreateVue },
   data() {
     return {
       perPage: 5,
       currentPage: 1,
+      isAddNewMovieModalActive: ref(false),
       movies: [],
       column: [
         { key: "show_details", label: "visualizar filme" },
