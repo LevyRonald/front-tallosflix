@@ -83,6 +83,13 @@ export default new Vuex.Store({
         .catch(error => reject(error))
       })
     },
+    getMovies() {
+      return new Promise((resolve, reject) => {
+        http.get(`/movies/list`)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
+    },
   },
   modules: {
   },
