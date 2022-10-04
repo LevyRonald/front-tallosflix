@@ -37,6 +37,7 @@
                   </button>
                   <div class="pl-1">
                     <b-form-input
+                    v-model="filter"
                       debounce="300"
                       placeholder="pesquisar..."
                     ></b-form-input>
@@ -48,10 +49,13 @@
               striped
               hover
               responsive
+              :filter="filter"
               :per-page="perPage"
               :current-page="currentPage"
               :fields="column"
               :items="movies"
+              show-empty
+              empty-filtered-text="nenhum filme encontrado"
             >
               <template #cell(actions)="{ item }">
                 <b-dropdown no-caret variant="flat">
@@ -124,10 +128,12 @@ export default {
       isAddNewMovieModalActive: ref(false),
       isDeleteMovieModalActive: ref(false),
       isUpdateMovieModalActive: ref(false),
+      filter: null,
       movies: [],
       getMovie: {},
       column: [
         { key: "show_details", label: "visualizar filme" },
+        { key: "_id" },
         { key: "title", label: "titulo" },
         { key: "plot", label: "descrição" },
         { key: "year", label: "ano" },
