@@ -5,6 +5,7 @@ import NotFound from '../pages/NotFoundPage.vue'
 // Admin pages
 import Icons from 'src/pages/Icons.vue'
 import Login from 'src/pages/Login.vue'
+import Logs from 'src/pages/Logs/Logs.vue'
 import Maps from 'src/pages/Maps.vue'
 import Movies from 'src/pages/Movies/movies.vue'
 import Notifications from 'src/pages/Notifications.vue'
@@ -49,6 +50,11 @@ const routes = [
         path: 'movies',
         name: 'movies',
         component: Movies
+      },
+      {
+        path: 'logs',
+        name: 'logs',
+        component: Logs
       },
       {
         path: 'user',

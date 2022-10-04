@@ -18,6 +18,10 @@
         <i class="nc-icon nc-tv-2"></i>
         <p>Filmes</p>
       </sidebar-link>
+      <sidebar-link to="/admin/logs">
+        <i class="nc-icon nc-paper-2"></i>
+        <p>Relatórios</p>
+      </sidebar-link>
       <sidebar-link to="/admin/user">
         <i class="nc-icon nc-circle-09"></i>
         <p>User Profile</p>
