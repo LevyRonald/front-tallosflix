@@ -6,7 +6,7 @@
           <b-tabs align="center">
             <b-card>
               <b-tab title="Sessões" active><sessions/></b-tab>
-            <b-tab title="Comentários"></b-tab>
+            <b-tab title="Comentários"><comments/></b-tab>
             </b-card>
           </b-tabs>
         </div>
@@ -16,8 +16,9 @@
 </template>
 <script>
 import Sessions from "../../components/Logs/sessions.vue";
+import Comments from "../../components/Logs/comments.vue";
 import Card from "../../components/Cards/Card.vue";
 export default {
-  components: { Card, Sessions },
+  components: { Card, Sessions, Comments },
 };
 </script>
