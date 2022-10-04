@@ -57,7 +57,7 @@
               :per-page="perPage"
               :current-page="currentPage"
               show-empty
-              empty-filtered-text="nenhum usuário encontrado"
+              empty-filtered-text="nenhum teatro encontrado"
             >
               <template #cell(actions)="{ item }">
                 <b-dropdown no-caret variant="flat">
