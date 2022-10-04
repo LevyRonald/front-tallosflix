@@ -104,6 +104,13 @@ export default new Vuex.Store({
         .catch(error => reject(error))
       })
     },
+    getComments() {
+      return new Promise((resolve, reject) => {
+        http.get(`/comments/list`)
+        .then(response => resolve(response))
+        .catch(error => reject(error))
+      })
+    },
   },
   modules: {
   },
