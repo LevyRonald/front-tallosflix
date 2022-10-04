@@ -1,6 +1,10 @@
 <template>
   <div class="content">
-    <movie-create-vue :isAddNewMovieModalActive="isAddNewMovieModalActive"/>
+    <movie-create-vue :isAddNewMovieModalActive="isAddNewMovieModalActive" />
+    <movie-delete-vue
+      :isDeleteMovieModalActive="isDeleteMovieModalActive"
+      :movieDel="moviedelete"
+    />
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -19,7 +23,11 @@
                 <div
                   class="col-md-5 d-flex align-items-center justify-content-end"
                 >
-                  <button class="btn btn-primary h-75" type="submit" v-b-modal.modal-create>
+                  <button
+                    class="btn btn-primary h-75"
+                    type="submit"
+                    v-b-modal.modal-create
+                  >
                     <span class="text-nowrap">Adicionar</span>
                   </button>
                   <div class="pl-1">
@@ -40,7 +48,7 @@
               :fields="column"
               :items="movies"
             >
-             <template #cell(actions)="">
+              <template #cell(actions)="{ item }">
                 <b-dropdown no-caret variant="flat">
                   <template #button-content>
                     <b-icon
@@ -52,7 +60,7 @@
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
-                  <b-dropdown-item>
+                  <b-dropdown-item @click="getmovie(item)">
                     <b-icon icon="trash" scale="0.9"></b-icon>
                     <label class="pl-1">Excluir</label>
                   </b-dropdown-item>
@@ -94,25 +102,29 @@
   </div>
 </template>
 <script>
-import { ref } from 'vue';
+import { ref } from "vue";
 import Card from "../../components/Cards/Card.vue";
-import MovieCreateVue from '../../components/Modals/MovieCreate.vue';
+import MovieCreateVue from "../../components/Modals/MovieCreate.vue";
 import store from "../../store";
+import MovieDeleteVue from "../../components/Modals/MovieDelete.vue";
+import http from '../../http';
 
 export default {
-  components: { Card, MovieCreateVue },
+  components: { Card, MovieCreateVue, MovieDeleteVue },
   data() {
     return {
       perPage: 5,
       currentPage: 1,
       isAddNewMovieModalActive: ref(false),
+      isDeleteMovieModalActive: ref(false),
       movies: [],
+      getMovie: {},
       column: [
         { key: "show_details", label: "visualizar filme" },
         { key: "title", label: "titulo" },
         { key: "plot", label: "descrição" },
         { key: "year", label: "ano" },
-        { key: "actions", label: "ações" }
+        { key: "actions", label: "ações" },
       ],
     };
   },
@@ -126,7 +138,21 @@ export default {
       .dispatch("getMovies")
       .then((response) => (this.movies = response.data))
       .catch((erro) => console.log(erro));
-    console.log();
   },
+  methods: {
+    moviedelete() {
+      http.delete(`movies/delete/${this.getMovie._id}`)
+      .then((response) => {
+        console.log(response),
+        this.$bvModal.hide("modal-delete")
+      })
+    },
+    getmovie(movies) {
+      this.getMovie = {
+        ...movies
+      };
+      this.$bvModal.show("modal-delete")
+    }
+  }
 };
 </script>
