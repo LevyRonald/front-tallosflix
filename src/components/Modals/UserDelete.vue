@@ -12,7 +12,7 @@
     >
       <b-card-text>Deseja realmente excluir o usuário?</b-card-text>
       <div class="w-100 d-flex justify-content-between">
-        <b-button @click="hideModal">Cancelar</b-button>
+        <b-button @click="hideModal" class="btn btn-primary">Cancelar</b-button>
         <b-button @click.prevent="userDel()" class="btn btn-danger"
           >Excluir</b-button
         >

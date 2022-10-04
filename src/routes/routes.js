@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFoundPage.vue'
 import Icons from 'src/pages/Icons.vue'
 import Login from 'src/pages/Login.vue'
 import Maps from 'src/pages/Maps.vue'
+import Movies from 'src/pages/Movies/movies.vue'
 import Notifications from 'src/pages/Notifications.vue'
 import Overview from 'src/pages/Overview.vue'
 import TableList from 'src/pages/TableList.vue'
@@ -43,6 +44,11 @@ const routes = [
         path: 'theaters',
         name: 'theaters',
         component: Theaters
+      },
+      {
+        path: 'movies',
+        name: 'movies',
+        component: Movies
       },
       {
         path: 'user',

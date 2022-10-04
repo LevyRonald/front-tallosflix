@@ -68,7 +68,7 @@
         />
       </b-form-group>
       <div class="w-100 d-flex justify-content-between">
-        <b-button @click="hideModal">Cancelar</b-button>
+        <b-button @click="hideModal" class="btn btn-danger">Cancelar</b-button>
         <b-button @click.prevent="updateTeatro()" class="btn btn-primary"
           >Atualizar</b-button
         >
