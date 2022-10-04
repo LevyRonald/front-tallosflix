@@ -5,6 +5,11 @@
       :isDeleteMovieModalActive="isDeleteMovieModalActive"
       :movieDel="moviedelete"
     />
+    <movie-update-vue
+      :isUpdateMovieModalActive="isUpdateMovieModalActive"
+      :movieGet="getMovie"
+      :updateMovie="movieupdate"
+    />
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -56,7 +61,7 @@
                       class="align-middle"
                     ></b-icon>
                   </template>
-                  <b-dropdown-item>
+                  <b-dropdown-item @click="updatemovie(item)">
                     <b-icon icon="box-arrow-up-right" scale="0.9"></b-icon>
                     <label class="pl-1">Editar</label>
                   </b-dropdown-item>
@@ -107,16 +112,18 @@ import Card from "../../components/Cards/Card.vue";
 import MovieCreateVue from "../../components/Modals/MovieCreate.vue";
 import store from "../../store";
 import MovieDeleteVue from "../../components/Modals/MovieDelete.vue";
-import http from '../../http';
+import http from "../../http";
+import MovieUpdateVue from "../../components/Modals/MovieUpdate.vue";
 
 export default {
-  components: { Card, MovieCreateVue, MovieDeleteVue },
+  components: { Card, MovieCreateVue, MovieDeleteVue, MovieUpdateVue },
   data() {
     return {
       perPage: 5,
       currentPage: 1,
       isAddNewMovieModalActive: ref(false),
       isDeleteMovieModalActive: ref(false),
+      isUpdateMovieModalActive: ref(false),
       movies: [],
       getMovie: {},
       column: [
@@ -141,18 +148,31 @@ export default {
   },
   methods: {
     moviedelete() {
-      http.delete(`movies/delete/${this.getMovie._id}`)
-      .then((response) => {
-        console.log(response),
-        this.$bvModal.hide("modal-delete")
-      })
+      http.delete(`movies/delete/${this.getMovie._id}`).then((response) => {
+        console.log(response), this.$bvModal.hide("modal-delete");
+      });
+    },
+    movieupdate() {
+      this.getMovie.year = parseInt(this.getMovie.year);
+      this.getMovie.runtime = parseInt(this.getMovie.runtime);
+      http
+        .patch(`movies/update/${this.getMovie._id}`, this.getMovie)
+        .then((response) => {
+          console.log(response), this.$bvModal.hide("modal-update");
+        });
     },
     getmovie(movies) {
       this.getMovie = {
-        ...movies
+        ...movies,
       };
-      this.$bvModal.show("modal-delete")
-    }
-  }
+      this.$bvModal.show("modal-delete");
+    },
+    updatemovie(movies) {
+      (this.getMovie = {
+        ...movies,
+      }),
+        this.$bvModal.show("modal-update");
+    },
+  },
 };
 </script>
