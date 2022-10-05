@@ -18,7 +18,9 @@
   > tbody > tr > th,
   > tfoot > tr > th,
   > thead > tr > td,
-  > tbody > tr > td,
+  > tbody > tr > td {
+    text-align: center;
+  }
   > tfoot > tr > td{
     padding: 12px 8px;
     vertical-align: middle;
@@ -36,7 +38,7 @@
     padding-bottom: 5px;
     border-top: none !important;
     border-bottom: none;
-    text-align: left !important;
+    text-align: center !important;
   }
 
   .td-actions .btn{
