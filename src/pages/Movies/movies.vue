@@ -192,12 +192,10 @@ export default {
       this.isBusy = true;
       try {
         const params = this.getRequestParams(this.page, this.limit);
-        console.log(params);
         const response = store
           .dispatch("getMovies", { params })
           .then((response) => {
             this.movies = response.data;
-            console.log(response.data.results);
           });
           this.isBusy = false;
           this.$refs.table.refresh()
