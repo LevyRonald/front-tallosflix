@@ -37,7 +37,7 @@
                   </button>
                   <div class="pl-1">
                     <b-form-input
-                    v-model="filter"
+                      v-model="filter"
                       debounce="300"
                       placeholder="pesquisar..."
                     ></b-form-input>
@@ -50,10 +50,10 @@
               hover
               responsive
               :filter="filter"
-              :per-page="perPage"
-              :current-page="currentPage"
               :fields="column"
-              :items="movies"
+              :items="movies.results"
+              :busy.sync="isBusy"
+              ref="table"
               show-empty
               empty-filtered-text="nenhum filme encontrado"
             >
@@ -93,12 +93,13 @@
                   "
                 >
                   <b-pagination
-                    v-model="currentPage"
+                    v-model="page"
                     :total-rows="totalMovies"
-                    :per-page="perPage"
+                    :per-page="limit"
                     first-number
                     last-number
                     class="mb-0 mt-1 mt-sm-0"
+                    @change="handlePageChange"
                   >
                   </b-pagination>
                 </b-col>
@@ -123,12 +124,15 @@ export default {
   components: { Card, MovieCreateVue, MovieDeleteVue, MovieUpdateVue },
   data() {
     return {
-      perPage: 5,
-      currentPage: 1,
+      limit: 5,
+      page: 1,
+      count: 0,
+      teste: 15,
       isAddNewMovieModalActive: ref(false),
       isDeleteMovieModalActive: ref(false),
       isUpdateMovieModalActive: ref(false),
       filter: null,
+      isBusy: false,
       movies: [],
       getMovie: {},
       column: [
@@ -143,14 +147,8 @@ export default {
   },
   computed: {
     totalMovies() {
-      return this.movies.length;
+      return this.movies.count;
     },
-  },
-  mounted() {
-    store
-      .dispatch("getMovies")
-      .then((response) => (this.movies = response.data))
-      .catch((erro) => console.log(erro));
   },
   methods: {
     moviedelete() {
@@ -172,6 +170,7 @@ export default {
         ...movies,
       };
       this.$bvModal.show("modal-delete");
+      console.log(this.getMovie);
     },
     updatemovie(movies) {
       (this.getMovie = {
@@ -179,6 +178,48 @@ export default {
       }),
         this.$bvModal.show("modal-update");
     },
+    getRequestParams(page, limit) {
+      const params = {};
+      if (page) {
+        params["page"] = page - 1;
+      }
+      if (limit) {
+        params["limit"] = limit;
+      }
+      return params;
+    },
+    retrieveTutorials() {
+      this.isBusy = true;
+      try {
+        const params = this.getRequestParams(this.page, this.limit);
+        console.log(params);
+        const response = store
+          .dispatch("getMovies", { params })
+          .then((response) => {
+            this.movies = response.data;
+            console.log(response.data.results);
+          });
+          this.isBusy = false;
+          this.$refs.table.refresh()
+          return response.data;
+      } catch (error) {
+        this.isBusy = false
+        return [];
+      }
+    },
+    async handlePageChange(value) {
+      this.page = value;
+      this.retrieveTutorials();
+    },
+
+    handlelimitChange(event) {
+      this.limit = event.target.value;
+      this.page = 1;
+      this.retrieveTutorials;
+    },
+  },
+  mounted() {
+    this.retrieveTutorials();
   },
 };
 </script>
