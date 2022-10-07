@@ -52,10 +52,9 @@
               hover
               responsive
               :filter="filter"
-              :items="theaters"
+              :items="theaters.results"
               :fields="column"
-              :per-page="perPage"
-              :current-page="currentPage"
+              :busy.sync="isBusy"
               show-empty
               empty-filtered-text="nenhum teatro encontrado"
             >
@@ -96,6 +95,7 @@
                     first-number
                     last-number
                     class="mb-0 mt-1 mt-sm-0"
+                    @change="handlePageChange"
                   >
                   </b-pagination>
                 </b-col>
@@ -128,6 +128,7 @@ export default {
       perPage: 10,
       currentPage: 1,
       filter: null,
+      isBusy: false,
       isAddNewTheaterModalActive: ref(false),
       isDeleteTheaterModalActive: ref(false),
       isUpdateTheaterModalActive: ref(false),
@@ -150,14 +151,8 @@ export default {
   },
   computed: {
     totalTheaters() {
-      return this.theaters.length;
+      return this.theaters.count;
     },
-  },
-  mounted() {
-    store
-      .dispatch("getTheaters")
-      .then((response) => (this.theaters = response.data))
-      .catch((erro) => console.log(erro));
   },
   methods: {
     theaterdelete() {
@@ -185,6 +180,38 @@ export default {
       };
       this.$bvModal.show("modal-update");
     },
+    getRequestParams(currentPage, perPage) {
+      const params = {};
+      if (currentPage) {
+        params["page"] = currentPage - 1;
+      }
+      if (perPage) {
+        params["limit"] = perPage;
+      }
+      return params;
+    },
+    retrieveTheater() {
+      this.isBusy = true;
+      try {
+        const params = this.getRequestParams(this.currentPage, this.perPage)
+        const response = store.dispatch("getTheaters", {params})
+        .then((response) => {
+          this.theaters = response.data;
+        })
+        this.isBusy = false
+        return response.data
+      } catch (error) {
+        this.isBusy = false
+        return [];
+      }
+    },
+    async handlePageChange(value) {
+      this.currentPage = value;
+      this.retrieveTheater();
+    }
+  },
+   mounted() {
+   this.retrieveTheater();
   },
 };
 </script>

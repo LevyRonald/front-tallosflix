@@ -70,9 +70,9 @@ export default new Vuex.Store({
         .catch(error => reject(error))
       })
     },
-    getTheaters() {
+    getTheaters(ctx, params) {
       return new Promise((resolve, reject) => {
-        http.get(`/theaters/list`)
+        http.get(`/theaters/list`, params)
         .then(response => resolve(response))
         .catch(error => reject(error))
       })
