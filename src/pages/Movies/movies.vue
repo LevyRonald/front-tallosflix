@@ -10,6 +10,10 @@
       :movieGet="getMovie"
       :updateMovie="movieupdate"
     />
+    <movie-view-vue
+      :isMovieViewModalActive="isMovieViewModalActive"
+      :movieGet="getMovie"
+    />
     <div class="container-fluid">
       <div class="row">
         <div class="w-100">
@@ -53,7 +57,6 @@
               :fields="column"
               :items="movies.results"
               :busy.sync="isBusy"
-              ref="table"
               show-empty
               empty-filtered-text="nenhum filme encontrado"
             >
@@ -75,8 +78,8 @@
                   </b-dropdown-item>
                 </b-dropdown>
               </template>
-              <template #cell(show_details)>
-                <b-button variant="outline">
+              <template #cell(show_details)="{ item }">
+                <b-button variant="outline" @click="viewmovie(item)">
                   <b-icon icon="eye"></b-icon>
                 </b-button>
               </template>
@@ -119,22 +122,39 @@ import store from "../../store";
 import MovieDeleteVue from "../../components/Modals/MovieDelete.vue";
 import http from "../../http";
 import MovieUpdateVue from "../../components/Modals/MovieUpdate.vue";
+import MovieViewVue from "../../components/Modals/MovieView.vue";
 
 export default {
-  components: { Card, MovieCreateVue, MovieDeleteVue, MovieUpdateVue },
+  components: {
+    MovieViewVue,
+    Card,
+    MovieCreateVue,
+    MovieDeleteVue,
+    MovieUpdateVue,
+  },
   data() {
     return {
       limit: 5,
-      page: 1,
+      page: 0,
       count: 0,
       teste: 15,
       isAddNewMovieModalActive: ref(false),
       isDeleteMovieModalActive: ref(false),
       isUpdateMovieModalActive: ref(false),
+      isMovieViewModalActive: ref(false),
       filter: null,
       isBusy: false,
       movies: [],
-      getMovie: {},
+      getMovie: {
+        imdb: {
+          rating: "",
+        },
+        tomatoes: {
+          viewer: {
+            rating: "",
+          },
+        },
+      },
       column: [
         { key: "show_details", label: "visualizar filme" },
         { key: "_id" },
@@ -172,6 +192,12 @@ export default {
       this.$bvModal.show("modal-delete");
       console.log(this.getMovie);
     },
+    viewmovie(movies) {
+      this.getMovie = {
+        ...movies,
+      };
+      this.$bvModal.show("modal-view");
+    },
     updatemovie(movies) {
       (this.getMovie = {
         ...movies,
@@ -197,11 +223,10 @@ export default {
           .then((response) => {
             this.movies = response.data;
           });
-          this.isBusy = false;
-          this.$refs.table.refresh()
-          return response.data;
+        this.isBusy = false;
+        return response.data;
       } catch (error) {
-        this.isBusy = false
+        this.isBusy = false;
         return [];
       }
     },
@@ -209,14 +234,8 @@ export default {
       this.page = value;
       this.retrieveTutorials();
     },
-
-    handlelimitChange(event) {
-      this.limit = event.target.value;
-      this.page = 1;
-      this.retrieveTutorials;
-    },
   },
-  mounted() {
+  created() {
     this.retrieveTutorials();
   },
 };
