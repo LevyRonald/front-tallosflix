@@ -1,0 +1,27 @@
+FROM node:16-alpine as build
+
+WORKDIR /user/tallosflixfront/app
+
+COPY package.*json ./
+
+RUN yarn install
+
+COPY . .
+
+RUN npm run build
+
+FROM node:16-alpine
+
+LABEL maintaner="tallosflixfront"
+
+WORKDIR /user/tallosflixfront/app
+
+COPY --from=build /user/tallosflixfront/app/node_modules ./node_modules
+
+RUN npm install -g serve
+
+USER node
+
+EXPOSE 8081
+
+ENTRYPOINT [ "serve", "-s", "dist", "-l", "8081" ]

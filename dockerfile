@@ -6,4 +6,4 @@ WORKDIR /user/tallosflixfront/app
 
 COPY . .
 
-EXPOSE 8080
+EXPOSE 8081
