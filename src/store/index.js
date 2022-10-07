@@ -10,6 +10,7 @@ export default new Vuex.Store({
   state: {
     token: null,
     user: {},
+    params: { }
   },
   getters: {
   },
@@ -69,9 +70,9 @@ export default new Vuex.Store({
         .catch(error => reject(error))
       })
     },
-    getTheaters() {
+    getTheaters(ctx, params) {
       return new Promise((resolve, reject) => {
-        http.get(`/theaters/list`)
+        http.get(`/theaters/list`, params)
         .then(response => resolve(response))
         .catch(error => reject(error))
       })
@@ -83,9 +84,9 @@ export default new Vuex.Store({
         .catch(error => reject(error))
       })
     },
-    getMovies() {
+    getMovies(ctx, params) {
       return new Promise((resolve, reject) => {
-        http.get(`/movies/list`)
+        http.get(`/movies/list`, params)
         .then(response => resolve(response))
         .catch(error => reject(error))
       })

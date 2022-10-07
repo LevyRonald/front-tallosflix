@@ -9,10 +9,9 @@
         </ul>
       </nav>
       <div class="copyright text-center">
-        &copy; Coded with
-        <i class="fa fa-heart heart"></i> by
-        <a href="https://binarcode.com" target="_blank">BinarCode</a>.
-        Designed by <a href="https://www.creative-tim.com/?ref=pdf-vuejs" target="_blank">Creative Tim</a>.
+        &copy; TallosFlix by
+        <a href="https://tallos.com.br/" target="_blank">Tallos</a>.
+        Projetado por <a href="https://github.com/LevyRonald" target="_blank">Levy Ronald</a>.
       </div>
     </div>
   </footer>
